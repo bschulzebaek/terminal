@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ $# -eq 0 ]
+then
+    echo "Error: Plugin directory missing!" 1>&2
+    exit 1
+fi
+
+PLUGIN_DIR="$1"
+
+printf "Validating plugin at ${PLUGIN_DIR}\n"
+
+printf "\nFind \"!important\" in CSS files \n"
+# Find `!important` in CSS files
+find ${PLUGIN_DIR} -type f \( -name '*.scss' -o -name '*.css' \) -exec grep -H '\!important' {} \;
+
+printf "\nCheck for \"FOREIGN_KEY_CHECKS\"\n"
+# Check for `FOREIGN_KEY_CHECKS`
+find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -Hi 'FOREIGN_KEY_CHECKS' {} \;
+
+printf "\nCheck for prohibited debugging code\n"
+# Check for prohibited debugging code
+find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -H '(die|exit|\sdd|dump|\sconsole\.)\(.*\)' {} \;
+
+printf "\nCheck for \"createDefaultContext\"\n"
+# Check for `createDefaultContext`
+find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -H '\:\:createDefaultContext\(.*\)' {} \;
+
+printf "\nFind links (check for suspicious ones)\n"
+# Find links (check for suspicious ones)
+find ${PLUGIN_DIR} -type d \( -name 'node_modules' -o -name 'vendor' -o -name 'public' \) -prune -o -type f \( -name 'composer.lock' -o -name 'package-lock.json' -o -name '*.map' \) -prune -o -type f -exec egrep -H 'http[s]*\:\/\/' {} \;
+
+printf "\nFind path traversals in twig files\n"
+# Find path traversals in twig files
+find ${PLUGIN_DIR} -type f -name '*.twig' -exec egrep -H '\.\.\/' {} \;

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+alias cc="clear"
+alias ll='ls -laht'
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+
+alias yolo="git push -f"
+alias sw="git switch"
+alias s="git status"
+alias d="git diff"
+alias l="git log"
+alias fp="git fetch && git pull"
+alias c="git commit"
+alias ca="git commit --amend"
+alias gall="git add ."

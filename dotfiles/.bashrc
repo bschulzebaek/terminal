@@ -1,15 +1,7 @@
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+BASH_CONFIG_DIR=$( cd -- "$( dirname -- "$(readlink -f "${BASH_SOURCE[0]}" || ${BASH_SOURCE[0]})" )" &> /dev/null && pwd )
 
-HISTCONTROL=ignoreboth
-shopt -s histappend
-HISTSIZE=1000
-HISTFILESIZE=2000
-shopt -s checkwinsize
+for config in $BASH_CONFIG_DIR/bashrc/??*; do
+    source $(realpath $config)
+done
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
+unset BASH_CONFIG_DIR

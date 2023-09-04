@@ -1,14 +1,25 @@
-#!/bin/bash
+# !/bin/bash
+
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
 echo "Creating symlinks for dotfiles..."
 
-for dotfile in ./dotfiles/.??*; do
+for dotfile in $parent_path/dotfiles/.??*; do
     ln -sf $(realpath $dotfile) ~
 done
 
 echo "Creating symlinks for scripts..."
 
-for dotfile in ./scripts/??*; do
-    sudo ln -sf $(realpath $dotfile) /usr/bin
+for script in $parent_path/scripts/??*; do
+    sudo ln -sf $(realpath $script) /usr/bin
 done
 
+# echo "Installing dependencies..."
+
+# for script in $parent_path/dependencies/*.sh; do
+#     echo "Running $script"
+#     source $script
+# done
+
+echo
+echo 'Done!'

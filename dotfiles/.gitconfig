@@ -5,6 +5,3 @@
 	autocrlf = false
 	fileMode = false
 	editor = vim
-[alias]
-	s = status
-	fp = "!git fetch; git pull"

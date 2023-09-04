@@ -6,6 +6,7 @@ alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
 alias yolo="git push -f"
 alias sw="git switch"
+alias p="git push"
 alias s="git status"
 alias d="git diff"
 alias l="git log"

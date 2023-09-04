@@ -11,7 +11,7 @@ done
 echo "Creating symlinks for scripts..."
 
 for script in $parent_path/scripts/??*; do
-    sudo ln -sf $(realpath $script) /usr/bin
+    ln -sf $(realpath $script) /usr/bin
 done
 
 # echo "Installing dependencies..."

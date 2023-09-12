@@ -2,7 +2,7 @@
 
 HISTSIZE=1000
 HISTFILESIZE=2000
-HISTCONTROL=ignorebot
+HISTCONTROL=ignoreboth
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
@@ -12,7 +12,7 @@ parse_git_branch() {
 # \A                            = Current time
 # \[\033[01;34m\]\w\[\033[00m\] = Current directory
 # \[\e[00m\]                    = Reset color
-PS1='\A \[\033[01;34m\]\w\[\033[00m\] \[\e[91m\]$(parse_git_branch) \[\e[00m\]'
+PS1='\A \[\033[01;34m\]\W\[\033[00m\] \[\e[91m\]$(parse_git_branch) \[\e[00m\]'
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -23,4 +23,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
+fi
+
+if [ -f /etc/bash_completion ]; then
+   . /etc/bash_completion
 fi

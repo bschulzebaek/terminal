@@ -18,8 +18,11 @@ find ${PLUGIN_DIR} -type f \( -name '*.scss' -o -name '*.css' \) -exec grep -H '
 printf "\nCheck for \"FOREIGN_KEY_CHECKS\"\n"
 find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -Hi 'FOREIGN_KEY_CHECKS' {} \;
 
-printf "\nCheck for prohibited debugging code\n"
-find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -H '(die|exit|\sdd|dump|\sconsole\.)\(.*\)' {} \;
+printf "\nCheck for prohibited debugging code (PHP)\n"
+find ${PLUGIN_DIR} -type f -name "*.php" -exec egrep -H '(die|exit|\sdd|dump)' {} \;
+
+printf "\nCheck for prohibited debugging code (JavaScript)\n"
+find ${PLUGIN_DIR} -type f \( -name "*.js" -o -name "*.ts" -o -name "*.html.twig" \) -exec egrep -H '(\sconsole\.)' {} \;
 
 printf "\nCheck for \"createDefaultContext\"\n"
 find ${PLUGIN_DIR} -type f -name '*.php' -exec egrep -H '\:\:createDefaultContext\(.*\)' {} \;

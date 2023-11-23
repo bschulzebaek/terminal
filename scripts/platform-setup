@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+composer setup
+
+APP_ENV=prod bin/console framework:demodata 
+
+bin/console dal:refresh:index

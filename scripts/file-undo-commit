@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+COMMIT_SHA="$1"
+
+if [ -z ${COMMIT_SHA} ]; then 
+    echo "Missing required argument \"COMMIT_SHA\""
+    exit 0
+fi
+
+FILE_NAME="$2"
+
+if [ -z ${FILE_NAME} ]; then 
+    echo "Missing required argument \"FILE_NAME\""
+    exit 0
+fi
+
+git show $COMMIT_SHA -- $FILE_NAME | git apply -R
